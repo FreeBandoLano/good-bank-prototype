@@ -22,7 +22,7 @@ Cloud Functions.
 
 | :----: | --------------------------------------- | :----: |
 
-| \*\*1\*\*  | Wallet + Phone OTP Login                | ⏳ |
+| \*\*1\*\*  | Smart Id verification w/ APDU           | ⏳ |
 
 | \*\*2\*\*  | Task / Reward Mini-CMS                  | ⏳ |
 
@@ -30,9 +30,9 @@ Cloud Functions.
 
 | \*\*4\*\*  | Token Mint + Voucher Redeem Stub        | ⏳ |
 
-| \*\*5\*\*  | Trust Score \& Analytics Dashboard       | ⏳ |
+| \*\*5\*\*  | Trust Score \& Analytics Dashboard      | ⏳ |
 
-| \*\*6\*\*  | 25-user Pilot \& Feedback Loop           | ⏳ |
+| \*\*6\*\*  | 25-user Pilot \& Feedback Loop          | ⏳ |
 
 
 
