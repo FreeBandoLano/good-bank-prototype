@@ -2,7 +2,7 @@
 
 |------|------------------|-------------------------|----------------------|
 
-| \*\*1\*\* | \*\*Wallet \& Auth Foundation\*\* | • Set up Firebase project.<br>• MRZ & NFC smart card reader (Firebase Auth).<br>• Firestore `users/{uid}` doc with starting balance = 0.<br>• Basic Flutter screens: Sign-in, Home with balance. | \*\*Fri Demo:\*\* two test phones register, log out/in, see balance. |
+| \*\*1\*\* | \*\*Wallet \& Auth Foundation\*\* | • Set up Firebase project.<br>• MRZ & NFC smart card reader (ReadId API).<br>• Firestore `users/{uid}` doc with starting balance = 0.<br>• Basic Flutter screens: Sign-in, Home with balance. | \*\*Fri Demo:\*\* two test phones register, log out/in, see balance. |
 
 | \*\*2\*\* | \*\*Task \& Reward Mini-CMS\*\* | • Flask micro-admin (or Firestore rules) to CRUD tasks, rewards.<br>• Add `owner:"GiveBackBB"` field.<br>• Pre-load 3 NTI courses (Digital Literacy, Intro Python, Excel Basics).<br>• App: task-list screen with org icon \& points. | \*\*Fri Demo:\*\* Admin creates a new task; it appears in app. |
 
