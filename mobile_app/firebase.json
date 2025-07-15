@@ -1,0 +1,1 @@
+{"flutter":{"platforms":{"android":{"default":{"projectId":"good-bank-mvp","appId":"1:488390860972:android:c722ed91ee0e98cc95ff09","fileOutput":"android/app/google-services.json"}},"dart":{"lib/firebase_options.dart":{"projectId":"good-bank-mvp","configurations":{"android":"1:488390860972:android:c722ed91ee0e98cc95ff09","ios":"1:488390860972:ios:101f51ecbbbbafa395ff09"}}}}}}
