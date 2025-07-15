@@ -22,7 +22,7 @@ Cloud Functions.
 
 | :----: | --------------------------------------- | :----: |
 
-| \*\*1\*\*  | Smart Id verification w/ APDU           | ⏳ |
+| \*\*1\*\*  | Smart Id verification w/ APDU cmds      | ⏳ |
 
 | \*\*2\*\*  | Task / Reward Mini-CMS                  | ⏳ |
 
