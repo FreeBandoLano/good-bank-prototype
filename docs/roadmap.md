@@ -1,41 +1,30 @@
-| Week | Core Sprint Goal | Build Tasks (Mon → Fri) | Checkpoints / Review |
-
-|------|------------------|-------------------------|----------------------|
-
-| \*\*1\*\* | \*\*Wallet \& Auth Foundation\*\* | • Set up Firebase project.<br>• MRZ & NFC smart card reader (ReadId API).<br>• Firestore `users/{uid}` doc with starting balance = 0.<br>• Basic Flutter screens: Sign-in, Home with balance. | \*\*Fri Demo:\*\* two test phones register, log out/in, see balance. |
-
-| \*\*2\*\* | \*\*Task \& Reward Mini-CMS\*\* | • Flask micro-admin (or Firestore rules) to CRUD tasks, rewards.<br>• Add `owner:"GiveBackBB"` field.<br>• Pre-load 3 NTI courses (Digital Literacy, Intro Python, Excel Basics).<br>• App: task-list screen with org icon \& points. | \*\*Fri Demo:\*\* Admin creates a new task; it appears in app. |
-
-| \*\*3\*\* | \*\*Verification SDK v0 \& File Upload\*\* | • Flutter: deep-link opens NTI course in WebView.<br>• Implement file picker (PDF / image).<br>• Cloud Storage + Cloud Function: on upload → create `taskLog` (`status=PENDING`).<br>• Show “Awaiting verification” toast. | \*\*Wed Check:\*\* upload works.<br>\*\*Fri Demo:\*\* `taskLog` appears in Firestore console. |
-
-| \*\*4\*\* | \*\*Auto-Token Mint \& Redeem Stub\*\* | • Cloud Function verifies upload (size > 50 KB) → `status=VERIFIED`, increment balance.<br>• Redeem screen: pick mock “Flow 1 GB Data Voucher (50 Tokens)”, subtract balance, display dummy PIN.<br>• Store IMEI hash to limit multi-account farming. | \*\*Fri Demo:\*\* Upload certificate → +50 tokens → redeem voucher. |
-
-| \*\*5\*\* | \*\*Trust-Score \& Analytics Dashboard\*\* | • Trust Score = Σ tokens + (7-day streak × 5).<br>• React/Firebase dashboard: total users, tokens, NTI completions.<br>• “GiveBackBB Admin” role shows only their data. | \*\*Thu:\*\* dashboard link shared.<br>\*\*Fri Retro:\*\* metrics live. |
-
-| \*\*6\*\* | \*\*Pilot On-Board \& Feedback Loop\*\* | • Recruit 25 youth testers.<br>• Send onboarding PDF with QR link to app.<br>• 48-hour pilot: each completes 1 NTI course.<br>• Collect feedback (Google Form).<br>• Draft \*\*Good Bank Rules v0.1\*\* (roles, token math, privacy). | \*\*Wed:\*\* mid-pilot MAU \& error check.<br>\*\*Fri Final Demo:\*\* live stats, 3 real redemptions, pilot findings \& next-step backlog. |
+| Week | Core Sprint Goal | Build Tasks&nbsp;(Mon → Fri) | Checkpoints / Review |
+|------|------------------|------------------------------|----------------------|
+| **1** | **Identity + Hub Foundation** | • Create Firebase project.<br>• Integrate **ReadID SDK** (MRZ + QR) in Flutter.<br>• Cloud Fn **`issueToken()`** → returns Firebase **Custom Token**.<br>• Firestore `users/{uid}` doc with balance = 0.<br>• Basic Flutter screens: Scan ID → Home. | **Fri Demo:** scan card → instant login → user doc appears. |
+| **2** | **Task + Reward Mini-CMS** | • Flask admin CRUD (`tasks`, `storeItems`).<br>• Field `owner:"GiveBackBB"`.<br>• Pre-load 3 NTI courses (Digital Literacy, Intro Python, Excel Basics).<br>• App: task-list with org icon & points. | **Fri Demo:** admin creates task; shows in app. |
+| **3** | **Certificate Upload & Verify** | • Flutter file picker (PDF/image).<br>• Upload → Storage → CF **`verifyCert()`** (`status=PENDING`).<br>• Toast “Awaiting verification…”. | **Wed Check:** upload works.<br>**Fri Demo:** `taskLog` visible in Firestore. |
+| **4** | **Token Mint & Voucher Redeem** | • `verifyCert()` size/checksum → `status=VERIFIED`.<br>• CF **`awardTokens()`** adds Sand-Dollar balance.<br>• Redeem screen: mock **Flow 1 GB voucher** (50 tokens) → display PIN.<br>• Store IMEI hash for fallback users. | **Fri Demo:** upload cert → +50 tokens → redeem PIN. |
+| **5** | **Trust-Score & Dashboard** | • Trust Score = Σ tokens + (7-day streak × 5).<br>• React/Firebase dashboard: users, tokens, NTI completions.<br>• “GiveBackBB Admin” filter. | **Thu:** dashboard link shared.<br>**Fri Retro:** metrics live. |
+| **6** | **Pilot On-Board & Feedback** | • Recruit 25 youth testers.<br>• Onboarding PDF w/ app QR.<br>• 48-h pilot: each completes 1 NTI course.<br>• Collect feedback (Google Form).<br>• Draft **Good Bank Rules v0.1**. | **Wed:** mid-pilot MAU & errors.<br>**Fri Final Demo:** live stats, ≥ 3 redemptions, pilot findings & next backlog. |
 
 ---
 
 ## Architecture Rationale — “Why these tools?”
 
-| Layer / Tool | Why we chose it | Constraints it solves |
-|--------------|-----------------|-----------------------|
-| **Flutter 3** | One code-base → Android & iOS; hot-reload for demo speed. | We don’t have bandwidth to maintain separate native apps. |
-| **Firebase** (Auth, Firestore, Storage, Functions, Hosting) | Turn-key backend, serverless, generous free tier; local emulators for offline dev. | No DevOps team; we need push-button infra that scales for a 25-user pilot. |
-| **Phone-Number OTP (Flow/Digicel)** | Universally available ID vector; telcos already do basic KYC; integrates with Firebase Auth in minutes. | National Digital ID APIs aren’t public yet; we still need a trustable identity today. |
-| **IMEI Hash** (stored with UID) | Soft device binding to discourage multi-account farming. | Prevents abuse until we can issue stronger verifiable credentials. |
-| **Cloud Functions (Node 18)** | Write tiny serverless functions in JS; automatic Firebase security context. | No separate backend server; reduces attack surface. |
-| **Flask Mini-Admin (Python)** | Quick CRUD panel for tasks & rewards; runs anywhere. | Waiting for a full CMS would delay content updates; Flask is 20 LOC to MVP. |
-| **React + Firebase SDK Dashboard** | Real-time charts with minimal boilerplate; deployable to Firebase Hosting. | Gives sponsors live KPIs without extra BI tooling. |
-| **GitHub Actions CI** | Lint, test, and build on every PR; free minutes. | No dedicated CI server; keeps code health visible to volunteers. |
-| **QR + GPS proof** | Low-code verification method, works offline; same pattern Yoma used. | Biometric / NFC readers out-of-scope for 6-week timeline. |
-| **Mock Airtime Vouchers** | Reward token → telco PIN in seconds; no fintech integration yet. | Cash-out requires central-bank clearance; airtime is instant & trusted. |
-| **Good Bank Rules v0.1** (open governance doc) | Fork of UN/UNICEF Yoma Rules; lightweight policy while waiting for legal review. | Formal legislation may take months; interim rules provide transparency now. |
+| Layer / Tool | Why we chose it | Constraint solved |
+|--------------|-----------------|-------------------|
+| **ReadID SDK** | Card MRZ + QR scan; zero passwords; 30-day demo licence. | National e-ID chip inactive; need strong auth fast. |
+| **Firebase Custom Token** | Converts ReadID payload into Firebase login in one HTTPS call. | Avoids own password/KYC store. |
+| **SIM-OTP (Flow/Digicel) – fallback** | Inclusive path for damaged cards / no-camera phones. | Ensures no one blocked at pilot. |
+| **Flutter 3** | Single code-base, hot-reload, low device RAM. | No bandwidth for separate native apps. |
+| **Firebase** (Auth, Firestore, Storage, Functions, Hosting) | Turn-key serverless; local emulators. | No DevOps team; scales for 25-user pilot. |
+| **Cloud Functions (Node 18)** | Tiny serverless functions (`issueToken`, `verifyCert`, `awardTokens`). | No backend server, low attack surface. |
+| **Flask Mini-Admin** | 20-line CRUD for tasks & store items. | Full CMS would delay content; Flask is fast. |
+| **React + Firebase SDK Dashboard** | Real-time charts, deploy via Firebase Hosting. | Live KPIs without extra BI tooling. |
+| **GitHub Actions CI** | Lint, test, build on every PR (free minutes). | Keeps code health visible to volunteers. |
+| **Mock Airtime Voucher API** | Reward tokens → telco PIN instantly. | Cash-out rails need central-bank clearance; airtime is immediate. |
+| **Good Bank Rules v0.1** | Fork of UNICEF Yoma Rules; interim governance doc. | Formal legislation months away—need transparency now. |
 
-> **Principle:** choose the smallest, most battle-tested component that lets us demonstrate value **within 42 days**, while leaving a clean migration path to national e-ID, production cloud, and more advanced payout rails.
+> **Principle:** ship value in **≤ 14 days** with the smallest, battle-tested components, while leaving a clean migration path to SSI (Keycloak, Veramo, ACA-Py) for Phase 2.
 
 ---
-
-
-
-
