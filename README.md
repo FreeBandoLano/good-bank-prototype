@@ -110,7 +110,7 @@ yarn dev
 ### **Current Team**
 - **Project Lead**: Strategic oversight and requirements
 - **Yoma Consultant** (In-house): Platform expertise and guidance
-- **AI Development Partner**: Implementation and customization
+- **Software Engineer**: Implementation and customization
 
 ### **Consultant Leverage Strategy**
 With a Yoma lead coordinator on-site, we have direct access to:
