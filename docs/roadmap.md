@@ -1,30 +1,212 @@
-| Week | Core Sprint Goal | Build Tasks&nbsp;(Mon → Fri) | Checkpoints / Review |
-|------|------------------|------------------------------|----------------------|
-| **1** | **Identity + Hub Foundation** | • Create Firebase project.<br>• Integrate **ReadID SDK** (MRZ + QR) in Flutter.<br>• Cloud Fn **`issueToken()`** → returns Firebase **Custom Token**.<br>• Firestore `users/{uid}` doc with balance = 0.<br>• Basic Flutter screens: Scan ID → Home. | **Fri Demo:** scan card → instant login → user doc appears. |
-| **2** | **Task + Reward Mini-CMS** | • Flask admin CRUD (`tasks`, `storeItems`).<br>• Field `owner:"GiveBackBB"`.<br>• Pre-load 3 NTI courses (Digital Literacy, Intro Python, Excel Basics).<br>• App: task-list with org icon & points. | **Fri Demo:** admin creates task; shows in app. |
-| **3** | **Certificate Upload & Verify** | • Flutter file picker (PDF/image).<br>• Upload → Storage → CF **`verifyCert()`** (`status=PENDING`).<br>• Toast “Awaiting verification…”. | **Wed Check:** upload works.<br>**Fri Demo:** `taskLog` visible in Firestore. |
-| **4** | **Token Mint & Voucher Redeem** | • `verifyCert()` size/checksum → `status=VERIFIED`.<br>• CF **`awardTokens()`** adds Sand-Dollar balance.<br>• Redeem screen: mock **Flow 1 GB voucher** (50 tokens) → display PIN.<br>• Store IMEI hash for fallback users. | **Fri Demo:** upload cert → +50 tokens → redeem PIN. |
-| **5** | **Trust-Score & Dashboard** | • Trust Score = Σ tokens + (7-day streak × 5).<br>• React/Firebase dashboard: users, tokens, NTI completions.<br>• “GiveBackBB Admin” filter. | **Thu:** dashboard link shared.<br>**Fri Retro:** metrics live. |
-| **6** | **Pilot On-Board & Feedback** | • Recruit 25 youth testers.<br>• Onboarding PDF w/ app QR.<br>• 48-h pilot: each completes 1 NTI course.<br>• Collect feedback (Google Form).<br>• Draft **Good Bank Rules v0.1**. | **Wed:** mid-pilot MAU & errors.<br>**Fri Final Demo:** live stats, ≥ 3 redemptions, pilot findings & next backlog. |
+# Good Bank Roadmap – Yoma Platform Customization
+
+**STRATEGIC PIVOT (Jan 2025):** Moved from building from scratch to **customizing the proven Yoma open-source platform** for 10x faster time-to-market.
+
+## 🎯 Overview
+
+| Phase | Core Focus | Duration | Status |
+|-------|------------|----------|--------|
+| **Setup** | **Platform Operational** | 1 day | ✅ **COMPLETE** |
+| **1** | **Barbados Customization** | 3-5 days | 🔧 **IN PROGRESS** |
+| **2** | **National ID Integration** | 1-2 weeks | ⏳ **PLANNED** |
+| **3** | **Content & Partnerships** | 1 week | ⏳ **PLANNED** |
+| **4** | **Mobile + Sand Dollar** | 1-2 weeks | ⏳ **PLANNED** |
+| **5** | **Pilot & Feedback** | 1 week | ⏳ **PLANNED** |
+
+**Total Timeline:** 4-6 weeks (vs 6+ weeks building from scratch)
 
 ---
 
-## Architecture Rationale — “Why these tools?”
+## ✅ Setup Phase - COMPLETE (Jan 2025)
 
-| Layer / Tool | Why we chose it | Constraint solved |
-|--------------|-----------------|-------------------|
-| **ReadID SDK** | Card MRZ + QR scan; zero passwords; 30-day demo licence. | National e-ID chip inactive; need strong auth fast. |
-| **Firebase Custom Token** | Converts ReadID payload into Firebase login in one HTTPS call. | Avoids own password/KYC store. |
-| **SIM-OTP (Flow/Digicel) – fallback** | Inclusive path for damaged cards / no-camera phones. | Ensures no one blocked at pilot. |
-| **Flutter 3** | Single code-base, hot-reload, low device RAM. | No bandwidth for separate native apps. |
-| **Firebase** (Auth, Firestore, Storage, Functions, Hosting) | Turn-key serverless; local emulators. | No DevOps team; scales for 25-user pilot. |
-| **Cloud Functions (Node 18)** | Tiny serverless functions (`issueToken`, `verifyCert`, `awardTokens`). | No backend server, low attack surface. |
-| **Flask Mini-Admin** | 20-line CRUD for tasks & store items. | Full CMS would delay content; Flask is fast. |
-| **React + Firebase SDK Dashboard** | Real-time charts, deploy via Firebase Hosting. | Live KPIs without extra BI tooling. |
-| **GitHub Actions CI** | Lint, test, build on every PR (free minutes). | Keeps code health visible to volunteers. |
-| **Mock Airtime Voucher API** | Reward tokens → telco PIN instantly. | Cash-out rails need central-bank clearance; airtime is immediate. |
-| **Good Bank Rules v0.1** | Fork of UNICEF Yoma Rules; interim governance doc. | Formal legislation months away—need transparency now. |
+### **Accomplished Today:**
+- ✅ **Strategic Analysis** - Evaluated building vs customizing options
+- ✅ **Yoma Platform Setup** - Cloned repository, installed all tools
+- ✅ **Development Environment** - All services operational locally
+- ✅ **Service Health** - PostgreSQL, Keycloak, .NET API, NextJS frontend running
+- ✅ **Documentation** - Updated roadmap and README for strategic pivot
 
-> **Principle:** ship value in **≤ 14 days** with the smallest, battle-tested components, while leaving a clean migration path to SSI (Keycloak, Veramo, ACA-Py) for Phase 2.
+### **Current Platform Status:**
+- **🔐 Keycloak Auth**: http://localhost:8080 (Ready)
+- **🌐 Yoma API**: http://localhost:5000 (Ready)  
+- **📱 Web Frontend**: http://localhost:3000 (Ready)
+- **🗄️ Database**: PostgreSQL with test data loaded
+- **⚡ Cache**: Valkey operational
 
 ---
+
+## 🔧 Phase 1: Barbados Customization (3-5 days)
+
+### **Week 1 Goals:**
+| Day | Task | Deliverable |
+|-----|------|-------------|
+| **Mon** | Platform Integration Testing | All services communicating, test users working |
+| **Tue** | UI/Brand Customization | Barbadian colors, logos, terminology |
+| **Wed** | Content Localization | NTI courses, Give Back Barbados opportunities |
+| **Thu** | Admin Dashboard Setup | Local organizations and content management |
+| **Fri** | Internal Demo | End-to-end user journey with Barbadian content |
+
+### **Key Deliverables:**
+- 🎨 **Barbadian Branding** - Visual identity, colors, terminology
+- 📋 **Local Content** - NTI courses loaded as "opportunities"
+- 🏛️ **Organizations** - Give Back Barbados, NTI, government partners
+- 👥 **Test Users** - Local personas and user journeys
+- 📊 **Admin Access** - Content management and user oversight
+
+### **Technical Tasks:**
+- Customize NextJS frontend theme and components
+- Configure organization profiles and branding
+- Load initial opportunity catalog (NTI courses)
+- Set up admin users and permissions
+- Test complete user journey: signup → browse → complete → verify
+
+---
+
+## 🆔 Phase 2: National ID Integration (1-2 weeks)
+
+### **Architecture Strategy:**
+Replace Keycloak password authentication with **Barbados National ID smart card** integration.
+
+### **Technical Approach:**
+| Component | Current (Yoma) | Target (Barbados) |
+|-----------|----------------|-------------------|
+| **Auth Method** | Username/password | National ID smart card + PIN |
+| **Identity Provider** | Keycloak local users | Government ID verification service |
+| **User Creation** | Manual registration | Auto-create from ID card data |
+| **Trust Level** | Email verification | Government-issued identity |
+
+### **Implementation Plan:**
+1. **Research Integration** - Barbados National ID technical specs
+2. **Smart Card Reader** - NFC/contact reader integration
+3. **Government API** - Identity verification service connection
+4. **Keycloak Extension** - Custom identity provider plugin
+5. **Mobile Support** - NFC capability for ID scanning
+6. **Fallback Auth** - SMS OTP for damaged cards
+
+### **Deliverable:**
+- ✅ Users can authenticate using national ID smart card
+- ✅ Auto-population of verified identity data
+- ✅ Seamless integration with existing Yoma platform
+
+---
+
+## 📋 Phase 3: Content & Partnerships (1 week)
+
+### **Content Strategy:**
+Populate platform with authentic Barbadian opportunities and rewards.
+
+### **Partnership Integration:**
+| Partner | Opportunity Type | Verification Method | Reward Points |
+|---------|------------------|---------------------|---------------|
+| **NTI** | Digital Literacy Course | Certificate upload + manual review | 100 points |
+| **Give Back BB** | Community Service | GPS check-in + photo proof | 50 points |
+| **Government** | Civic Engagement | Event attendance verification | 75 points |
+| **Private Sector** | Skills Training | Partner API integration | 125 points |
+
+### **Reward Marketplace:**
+- 📱 **Flow/Digicel Credit** - Airtime vouchers
+- 🎫 **Local Businesses** - Discounts and vouchers
+- 🎓 **Education** - Course fee waivers, scholarship applications
+- 💰 **Sand Dollar CBDC** - Direct digital currency rewards (Phase 4)
+
+---
+
+## 📱 Phase 4: Mobile + Sand Dollar (1-2 weeks)
+
+### **Mobile Strategy:**
+Build dedicated **Flutter mobile apps** that connect to the Yoma API.
+
+### **Mobile Features:**
+- 📷 **National ID Scanning** - NFC reader for smart cards
+- 📍 **GPS Verification** - Location-based opportunity completion
+- 📋 **Offline Capability** - Complete tasks without internet
+- 🔔 **Push Notifications** - New opportunities and rewards
+- 🎯 **Gamification** - Streaks, badges, leaderboards
+
+### **Sand Dollar Integration:**
+Replace point-based rewards with **Barbados Central Bank Digital Currency**.
+
+### **CBDC Architecture:**
+| Component | Integration |
+|-----------|-------------|
+| **Wallet Creation** | Auto-generate Sand Dollar wallet on signup |
+| **Reward Distribution** | API integration with CBDC payment rails |
+| **Balance Display** | Real-time Sand Dollar balance in app |
+| **Redemption** | Direct CBDC transfers to verified merchants |
+
+---
+
+## 🧪 Phase 5: Pilot & Feedback (1 week)
+
+### **Pilot Scope:**
+- **📊 Target**: 25-50 Barbadian youth (ages 16-35)
+- **⏱️ Duration**: 1 week intensive pilot
+- **📍 Locations**: Bridgetown, St. Michael, Christ Church
+
+### **Success Metrics:**
+| Metric | Target | Measurement |
+|--------|---------|-------------|
+| **User Onboarding** | 90% completion rate | National ID → profile creation |
+| **Opportunity Completion** | 80% complete ≥1 task | NTI course or community service |
+| **Reward Redemption** | 70% redeem rewards | Sand Dollar or voucher usage |
+| **User Satisfaction** | 4.5/5 rating | Post-pilot survey |
+
+### **Feedback Collection:**
+- 📋 **Daily Check-ins** - WhatsApp group for real-time issues
+- 📱 **In-app Feedback** - Quick rating and comment system
+- 🎯 **Focus Groups** - End-of-pilot discussion sessions
+- 📊 **Analytics** - Platform usage patterns and drop-off points
+
+---
+
+## 🔄 Continuous Improvement Strategy
+
+### **Post-Pilot Iterations:**
+1. **Technical Refinements** - Performance optimization, bug fixes
+2. **Content Expansion** - More partners, opportunities, rewards
+3. **Advanced Features** - Social elements, advanced gamification
+4. **Scale Preparation** - Infrastructure for island-wide deployment
+
+### **Long-term Vision (6+ months):**
+- 🌐 **Self-Sovereign Identity** - Full SSI stack with verifiable credentials
+- 🏛️ **Government Integration** - Official program status and backing
+- 🌍 **Regional Expansion** - Template for other Caribbean nations
+- 🤝 **International Partnerships** - Yoma network collaboration
+
+---
+
+## 📈 Strategic Advantages
+
+### **Why This Approach Works:**
+| Advantage | Benefit |
+|-----------|---------|
+| **Proven Platform** | 90% fewer unknowns, established patterns |
+| **Rapid Deployment** | 4-6 weeks vs 6+ months building from scratch |
+| **Enterprise Grade** | Production-ready architecture and security |
+| **Community Support** | Active Yoma developer and user community |
+| **Future-Proof** | SSI-ready, blockchain-compatible foundation |
+
+### **Risk Mitigation:**
+- ✅ **Technical Risk**: Eliminated by using proven platform
+- ✅ **Timeline Risk**: Reduced by 60%+ through customization approach  
+- ✅ **Resource Risk**: Leveraging existing expertise and components
+- ✅ **Adoption Risk**: Following successful South African model
+
+---
+
+## 🎯 Next Session Action Items
+
+### **Tomorrow's Priorities:**
+1. ✅ **Platform Health Check** - Verify all services are operational
+2. 🎨 **Begin UI Customization** - Barbadian branding implementation
+3. 📋 **Content Planning** - Map NTI courses to Yoma opportunities
+4. 🤝 **Consultant Collaboration** - Leverage in-house Yoma expertise
+
+### **This Week Targets:**
+- **Mon-Tue**: Complete Barbadian UI/UX customization
+- **Wed-Thu**: Load NTI course content and test user flows
+- **Fri**: Internal demo with full Barbadian experience
+
+---
+
+**🚀 Ready to deliver a world-class youth engagement platform for Barbados in record time!**

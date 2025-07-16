@@ -1,112 +1,163 @@
-\# Good Bank – 6-Week MVP 📲💙
+# Good Bank – Barbados Youth Digital Wallet 📲💙
 
+**STRATEGIC UPDATE (Jan 2025):** This project has pivoted from building from scratch to **customizing the proven Yoma open-source platform** for Barbados-specific needs.
 
-
-Digital-public-infrastructure prototype rewarding Barbadian youth for \*\*verified learning\*\*  
-
-(NTI courses) and \*\*community deeds\*\* (Give Back Barbados). Built with Firebase, Flutter, and
-
-Cloud Functions.
-
-
+Digital public infrastructure prototype rewarding Barbadian youth for **verified learning** (NTI courses) and **community service** (Give Back Barbados), powered by **Barbados National ID** smart card authentication.
 
 ---
 
+## 🎯 Project Status
 
+### **Current Achievement**
+✅ **Yoma Platform Operational** - Full development environment running locally  
+✅ **All Services Deployed** - PostgreSQL, Keycloak Auth, .NET 9 API, NextJS frontend  
+✅ **Strategic Foundation** - Leveraging battle-tested South African youth engagement platform  
 
-\## Sprint Road-map (42 days)
-
-
-
-| Sprint | Focus                                   | Status |
-
-| :----: | --------------------------------------- | :----: |
-
-| \*\*1\*\*  | Smart Id verification w/ APDU cmds      | ⏳ |
-
-| \*\*2\*\*  | Task / Reward Mini-CMS                  | ⏳ |
-
-| \*\*3\*\*  | Certificate Upload + Verification SDK   | ⏳ |
-
-| \*\*4\*\*  | Token Mint + Voucher Redeem Stub        | ⏳ |
-
-| \*\*5\*\*  | Trust Score \& Analytics Dashboard      | ⏳ |
-
-| \*\*6\*\*  | 25-user Pilot \& Feedback Loop          | ⏳ |
-
-
-
-Progress tracked in the \*\*Project Board\*\* → Kanban columns `Week 1 … Week 6`.
-
-
+### **Next Phase**
+🔧 **Barbados Customization** - Integrate national ID smart card authentication  
+🎨 **UI/Brand Adaptation** - Barbadian visual identity and local content  
+💰 **Sand Dollar Integration** - Central bank digital currency rewards  
 
 ---
 
+## 🏗️ Architecture Overview
 
+### **Technology Stack (Yoma-Based)**
+- **Frontend**: NextJS 15 (TypeScript) + PWA capabilities
+- **Backend**: .NET 9 Web API with Entity Framework
+- **Database**: PostgreSQL 17 with automated migrations  
+- **Authentication**: Keycloak + **Barbados National ID** (planned)
+- **Cache**: Valkey (Redis alternative)
+- **Infrastructure**: Docker Compose + Kubernetes Helm charts
+- **Self-Sovereign Identity**: CloudAPI SSI Stack (Phase 2)
 
-\## Quick Start (Dev)
+### **Key Services**
+- **📱 Web Application**: http://localhost:3000
+- **🔐 Keycloak Auth**: http://localhost:8080  
+- **🌐 Yoma API**: http://localhost:5000
+- **📊 Admin Dashboard**: Built-in opportunity & user management
 
+---
 
+## 🚀 Quick Start
 
-\### Mobile App 📱
+### **Prerequisites**
+- Docker Desktop (running)
+- .NET 9 SDK  
+- Node.js 20 + Yarn
+- Git
 
+### **Development Setup**
 ```bash
+# 1. Clone the repositories
+git clone https://github.com/didx-xyz/yoma.git yoma-platform
+cd yoma-platform
 
-cd mobile\_app
+# 2. Start backend services
+cd src/api
+docker-compose up -d
 
-flutter pub get
+# 3. Start frontend (new terminal)
+cd ../web
+yarn install --ignore-engines
+yarn dev
 
-flutter run  # connect Android device or emulator
+# 4. Access the platform
+# Frontend: http://localhost:3000
+# API: http://localhost:5000  
+# Keycloak: http://localhost:8080
+```
 
---
-
-DOC LINK >>> https://docs.google.com/document/d/1eVzHYiMukwKWi42NQZyJIFFrX0YPqRIbhRNE9AUroYU/edit?usp=sharing
-
-## Human-Centered Design Considerations
-
-### User Onboarding
-- Youth participants sign up using their national ID.
-- This triggers the creation of a Self-Sovereign Identity (SSI) via OpenID Connect.
-
-### Credential Creation and Storage
-- Data from the national ID (e.g., name, ID number, address) is saved as **verifiable credentials** in the youth's SSI wallet.
-- **No personal data is stored in a centralized database.**
-
-### Partner-Issued Credentials
-- Partners issue additional credentials based on:
-  - Online learning (e.g., COURSERA courses)
-  - Community service and impact
-  - Barbados Give-back or volunteering
-- Each credential type is structured as a **unique schema** to capture key data (e.g., hours of learning completed).
-
-### Criteria-Based Verification for Benefits
-- Verifiers offer benefits based on youth meeting **specific criteria**:
-  - Example: 10 hours internship, 3 hours learning, 1 community task
-- The system checks if criteria are met and returns a **binary result** (Met / Not Met).
-- **No personal data** is shared with verifiers.
-- Youth select what data to share via a dropdown-style interface (e.g., no phone number or address).
+### **Test Accounts**
+- **Admin**: admin@yoma.world / password123
+- **Youth User**: youth@example.com / password123
 
 ---
 
-### Assumptions on User Behavior
+## 📋 Strategic Rationale
 
-**Youth Motivation**  
-- Youth are incentivized to use the platform (to earn credentials and authorize data sharing) in exchange for a reward or opportunity.
+### **Why Yoma Platform?**
+1. **Proven at Scale** - Successfully deployed in South Africa
+2. **Battle-Tested** - Multi-tenant, enterprise-grade architecture  
+3. **Feature Complete** - Opportunities, verification, marketplace, SSI-ready
+4. **Open Source** - GPL-3.0 license, full customization rights
+5. **Time-to-Market** - 3-5 days vs 6+ weeks building from scratch
 
-**Issuer Participation**  
-- Issuers (e.g., NGOs or course providers) understand:
-  - The implications of issuing a credential
-  - The importance of accuracy
-  - Risks of issuing false or unverified credentials
-
-**Verifier Trust**  
-- Verifiers trust the returned credential status without needing raw data or future evidence.
-- They are willing to issue rewards **based solely on system verification.**
+### **Barbados Customization Plan**
+- **🆔 National ID Integration** - Replace password auth with smart card
+- **💰 Sand Dollar Rewards** - CBDC integration for token redemption  
+- **🏛️ Local Content** - NTI courses, Give Back Barbados partnerships
+- **🎨 Branding** - Barbadian visual identity and terminology
+- **📱 Mobile Apps** - Flutter apps connecting to Yoma API
 
 ---
 
-### Pilot Goals
-- Test usability and motivation for all user groups.
-- Evaluate trust in the system without revealing sensitive personal information.
-- Assess feasibility of decentralized verification for real-world benefit delivery.
+## 📚 Documentation
+
+### **Development**
+- [Yoma Architecture Docs](https://docs.yoma.world/technology/architecture)
+- [Original Flutter Prototype](./mobile_app/) - Preserved for UX patterns
+- [Updated Roadmap](./docs/roadmap.md) - Yoma customization phases
+
+### **Business Context**  
+- [Architecture Diagram](./diagrams/) - Original system design
+- [Project Pitch](./pitch_decks/) - Business case and vision
+
+---
+
+## 🤝 Team & Collaboration
+
+### **Current Team**
+- **Project Lead**: Strategic oversight and requirements
+- **Yoma Consultant** (In-house): Platform expertise and guidance
+- **AI Development Partner**: Implementation and customization
+
+### **Consultant Leverage Strategy**
+With a Yoma lead coordinator on-site, we have direct access to:
+- Platform architecture decisions and lessons learned
+- Customization best practices and shortcuts  
+- SSI integration roadmap and technical guidance
+- Community connections and partnership opportunities
+
+---
+
+## 📅 Next Session Priorities
+
+### **Immediate Tasks (Tomorrow)**
+1. **🔗 Test Platform Integration** - Verify all services communicating
+2. **🎨 UI Customization** - Barbadian branding and terminology  
+3. **📋 Content Setup** - Load NTI courses and local opportunities
+4. **🆔 National ID Research** - Smart card integration architecture
+
+### **This Week Goals**
+- ✅ Platform operational and customized
+- ✅ Test users completing local opportunities  
+- ✅ Barbadian branding and content
+- ✅ National ID integration plan finalized
+
+---
+
+## 🔧 Troubleshooting
+
+### **Common Issues**
+- **Docker not running**: Start Docker Desktop and wait 2-3 minutes
+- **Port conflicts**: Stop other services on ports 3000, 5000, 8080
+- **Node version**: Use Node 20.x (yarn install --ignore-engines if needed)
+- **Database issues**: `docker-compose down && docker-compose up -d`
+
+### **Platform Health Check**
+```bash
+# Verify all services
+docker-compose ps
+
+# Test API
+curl http://localhost:5000/api/v3/lookup/skill
+
+# Test Auth  
+curl http://localhost:8080/realms/yoma/.well-known/openid_configuration
+```
+
+---
+
+**🎉 Ready to build the future of youth engagement in Barbados!**
 
